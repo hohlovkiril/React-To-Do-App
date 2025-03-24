@@ -1,0 +1,13 @@
+{
+  "name": "project-to-do-app",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "workspaces": [
+    "apps/*",
+    "lib/*"
+  ]
+}

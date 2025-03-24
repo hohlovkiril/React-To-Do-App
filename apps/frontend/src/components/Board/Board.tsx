@@ -137,6 +137,8 @@ export default function Board() {
       }
     }
   }
+
+  if (!state) return;
   
   return (
     <DragDropContext
@@ -152,10 +154,10 @@ export default function Board() {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {state.sort((a, b) => a.viewIndex - b.viewIndex).map((col, key) => (
+            {state.map((col, key) => (
               <Draggable
                 key={key}
-                draggableId={`DRAG#COLUMN#${col.id}#${col.viewIndex}`}
+                draggableId={`DRAG#COLUMN#${col.id}#${col.viewIndex}#${col.title}`}
                 index={key}
               >
                 {(dragProvided) => (

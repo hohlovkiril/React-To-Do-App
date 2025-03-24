@@ -18,7 +18,7 @@ export default function Column(props: ColumnProps) {
   /** States */
 
   const [formTaskActive, setFormTaskActive] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>(props.column.title);
+  const [title, setTitle] = useState<string>('');
   const [newTaskTitle, setNewTaskTitle] = useState<string>('');
 
   /** Handlers */
@@ -49,7 +49,7 @@ export default function Column(props: ColumnProps) {
               onBlur={() => {
                 onUpdateColumn(props.column.id, title);
               }}
-              value={title}
+              value={title || props.column.title}
               onChange={(evt) => setTitle(evt.currentTarget.value)}
               sx={{
                 fontWeight: '300',

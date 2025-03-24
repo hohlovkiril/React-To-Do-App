@@ -20,6 +20,7 @@ export type TaskboardApi = {
     columnId?: number;
   }) => void;
   onRemoveTask: (taskId: number) => void;
+  setLoaded: () => void;
 }
 
 export type TaskboardProps = {
@@ -95,6 +96,8 @@ export const TaskboardProvider: React.FC<TaskboardProps> = ({ children }) => {
   }
 
   const handleUpdateDatabase = useCallback(() => {
+    console.log('update')
+    console.table(state.sort((a, b) => a.viewIndex - b.viewIndex))
     for (let i = 0; i < state.length; i++) {
       const column = state[i];
 
@@ -128,11 +131,13 @@ export const TaskboardProvider: React.FC<TaskboardProps> = ({ children }) => {
     loaded,
     handleUpdateDatabase,
   ])
+
+  console.table(state.sort((a, b) => a.viewIndex - b.viewIndex))
   
   return (
     <TaskboardContext.Provider
       value={{
-        state,
+        state: state.sort((a, b) => a.viewIndex - b.viewIndex),
         selectedEditTask: selectedTask,
         onChange: setState,
         onAddColumn: handleAddColumn,
@@ -142,6 +147,7 @@ export const TaskboardProvider: React.FC<TaskboardProps> = ({ children }) => {
         onAddTask: handleAddTask,
         onUpdateTask: handleUpdateTask,
         onRemoveTask: handleRemoveTask,
+        setLoaded: () => setLoaded(false)
       }}
     >
       {children}

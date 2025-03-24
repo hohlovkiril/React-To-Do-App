@@ -33,7 +33,7 @@ export class TaskEntity {
     type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  public duoDate: Date;
+  public dueDate: Date;
 
   /** Relatations */
 

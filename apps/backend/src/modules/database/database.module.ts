@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ColumnEntity, MediaEntity, TaskEntity } from 'src/entities';
 
 @Module({
   imports: [
@@ -10,7 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'postgres',
       password: 'postgres',
       database: 'todoapp',
-      entities: [__dirname + '../../entities/**/*.entity.js'],
+      entities: [ColumnEntity, TaskEntity, MediaEntity],
       synchronize: true,
     }),
   ],

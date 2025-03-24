@@ -36,6 +36,7 @@ export class TaskController {
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: TaskUpdateDto,
   ) {
+    console.log(dto);
     return await this.service.update(id, dto);
   }
 

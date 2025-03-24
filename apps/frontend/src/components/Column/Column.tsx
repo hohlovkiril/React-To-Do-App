@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd'
-import { Box, Button, CardContent, CardHeader, IconButton, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, CardContent, CardHeader, IconButton, Stack, TextField, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete'
 import CancelIcon from '@mui/icons-material/Cancel'
 
@@ -13,24 +13,25 @@ export default function Column(props: ColumnProps) {
 
   /** Context */
 
-  const { onRemoveColumn, onAddTask } = useTaskboard();
+  const { onUpdateColumn, onRemoveColumn, onAddTask } = useTaskboard();
 
   /** States */
 
-  const [formActive, setFormActive] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>('');
+  const [formTaskActive, setFormTaskActive] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>(props.column.title);
+  const [newTaskTitle, setNewTaskTitle] = useState<string>('');
 
   /** Handlers */
 
   const handleOnClickAdd = () => {
-    setFormActive(false);
-    setTitle('');
-    onAddTask({ id: 0, viewIndex: 0, title }, props.column.id)
+    setFormTaskActive(false);
+    setNewTaskTitle('');
+    onAddTask({ id: 0, viewIndex: 0, title: newTaskTitle }, props.column.id)
   }
 
   const handleOnClickCancel = () => {
-    setFormActive(false);
-    setTitle('');
+    setFormTaskActive(false);
+    setNewTaskTitle('');
   }
 
   return (
@@ -41,17 +42,33 @@ export default function Column(props: ColumnProps) {
     >
       <CardHeader
         title={(
-          <Typography>
-            {props.column.title}
-          </Typography>
+          <>
+            <TextField
+              variant='standard'
+              size='small'
+              onBlur={() => {
+                onUpdateColumn(props.column.id, title);
+              }}
+              value={title}
+              onChange={(evt) => setTitle(evt.currentTarget.value)}
+              sx={{
+                fontWeight: '300',
+                fontSize: 'clamp(12px, 2vw, 16px)',
+              }}
+            />
+          </>
         )}
         action={(
-          <IconButton
-            color='error'
-            onClick={() => onRemoveColumn(props.column.id)}
+          <Tooltip
+            title='Delete column'
           >
-            <DeleteIcon />
-          </IconButton>
+            <IconButton
+              color='error'
+              onClick={() => onRemoveColumn(props.column.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
         )}
       />
       <CardContent
@@ -77,7 +94,7 @@ export default function Column(props: ColumnProps) {
 
               {dropProvided.placeholder}
               
-              {formActive ? (
+              {formTaskActive ? (
                 <Box
                   sx={{
                     display: 'flex',
@@ -86,8 +103,8 @@ export default function Column(props: ColumnProps) {
                   }}
                 >
                   <TextField
-                    value={title}
-                    onChange={(evt) => setTitle(evt.currentTarget.value)}
+                    value={newTaskTitle}
+                    onChange={(evt) => setNewTaskTitle(evt.currentTarget.value)}
                     sx={{
                       background: 'white',
                     }}
@@ -125,7 +142,7 @@ export default function Column(props: ColumnProps) {
                     textTransform: 'none',
                     borderStyle: 'dashed'
                   }}
-                  onClick={() => setFormActive(true)}
+                  onClick={() => setFormTaskActive(true)}
                 >
                   Add Task
                 </Button>

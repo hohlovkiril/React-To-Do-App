@@ -13,6 +13,6 @@ export type TaskType = {
   title: string;
   description?: string;
   priority?: TaskPriority;
-  duoDate?: Date;
+  dueDate?: Date;
   column?: ColumnType;
 }

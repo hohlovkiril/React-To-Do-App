@@ -6,6 +6,7 @@ export const ColumnContainer = styled(Card)(() => ({
   flexDirection: 'column',
   justifyContent: 'flex-start',
   width: '240px',
+  minWidth: '200px',
   maxWidth: '240px',
   background: 'rgb(250, 250, 250)'
 }))

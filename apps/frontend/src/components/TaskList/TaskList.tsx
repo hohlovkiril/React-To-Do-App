@@ -1,7 +1,7 @@
 import { Draggable } from 'react-beautiful-dnd'
 import { TaskInnerListContainer, TaskOutterListContainer } from "./TaskList.style";
 import { TaskInnerListProps, TaskOutterListProps } from "./TaskList.types";
-import TaskItem from '../TaskItem';
+import { TaskItem } from '../TaskItem';
 
 export function TaskOutterList(props: TaskOutterListProps) {
   return (

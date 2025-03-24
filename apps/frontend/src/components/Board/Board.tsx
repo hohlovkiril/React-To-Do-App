@@ -5,7 +5,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 import { BoardContainer } from "./Board.style";
 import Column from '../Column';
-import { ColumnType } from '../../common';
+import { ColumnType, TaskType } from '../../common';
 import { useTaskboard } from '../../hooks';
 
 export default function Board() {
@@ -81,14 +81,12 @@ export default function Board() {
         const column = state.find((col) => col.viewIndex === Number(sourceColumnInx));
 
         if (column) {
-          console.log(column)
-          console.log(result)
           if (destination.index > source.index) {
-            onChange(prev => prev.map((col) => ({
+            onChange(prev => prev.map((col: ColumnType) => ({
               ...col,
               task: col.viewIndex !== column.viewIndex
                 ? col.task
-                : col.task.map((task) => ({
+                : col.task.map((task: TaskType) => ({
                   ...task,
                   viewIndex: task.viewIndex === source.index
                     ? destination.index
@@ -97,11 +95,11 @@ export default function Board() {
                 }))
             })))
           } else {
-            onChange(prev => prev.map((col) => ({
+            onChange(prev => prev.map((col: ColumnType) => ({
               ...col,
               task: col.viewIndex !== column.viewIndex
                 ? col.task
-                : col.task.map((task) => ({
+                : col.task.map((task: TaskType) => ({
                   ...task,
                   viewIndex: task.viewIndex === source.index
                     ? destination.index
@@ -122,17 +120,17 @@ export default function Board() {
           const sourceTask = sourceColumn.task.find((task) => task.viewIndex === Number(result.draggableId.split('#')[3]))
           const destinationSliceStart = destinationColumn.task.sort((a, b) => a.viewIndex - b.viewIndex).slice(0, destination.index);
           const destinationSliceEnd = destinationColumn.task.sort((a, b) => a.viewIndex - b.viewIndex).slice(destination.index);
-
           if (sourceTask) {
+            sourceTask.column = destinationColumn;
             const destinationList = [...destinationSliceStart, sourceTask, ...destinationSliceEnd];
 
-            onChange(prev => prev.map((col) => ({
+            onChange(prev => prev.map((col: ColumnType) => ({
               ...col,
               task: col.viewIndex !== sourceColumn.viewIndex && col.viewIndex !== destinationColumn.viewIndex
                 ? col.task
                 : col.viewIndex === sourceColumn.viewIndex
-                ? sourceList.map((task, key) => ({ ...task, index: key }))
-                : destinationList.map((task, key) => ({ ...task, index: key }))
+                ? sourceList.map((task: TaskType, key) => ({ ...task, viewIndex: key }))
+                : destinationList.map((task: TaskType, key) => ({ ...task, viewIndex: key }))
             })))
           }
         }

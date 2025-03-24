@@ -91,8 +91,8 @@ export class TaskService {
       task.priority = payload.priority;
     }
 
-    if (payload.duoDate !== undefined) {
-      task.duoDate = payload.duoDate;
+    if (payload.dueDate !== undefined) {
+      task.dueDate = payload.dueDate;
     }
 
     return await this.repository.save(task);

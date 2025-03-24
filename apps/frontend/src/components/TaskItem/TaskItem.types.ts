@@ -7,3 +7,9 @@ export type TaskItemProps = {
   draggableProps: DraggableProvidedDraggableProps;
   data: TaskType;
 }
+
+export type TaskFormProps = {
+  open: boolean;
+  onClose: () => void;
+  onDelete: () => void;
+}

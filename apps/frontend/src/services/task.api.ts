@@ -1,7 +1,7 @@
-export class ColumnApi {
-  public static async getOne(columnId: number | string) {
+export class TaskApi {
+  public static async getOne(taskId: number | string) {
     try {
-      const req = await fetch(`http://localhost:3000/api/column/${columnId}`, {
+      const req = await fetch(`http://localhost:3000/api/task/${taskId}`, {
         method: 'GET',
       });
 
@@ -20,9 +20,10 @@ export class ColumnApi {
       throw new Error(`Error fetch data: ${err instanceof Error ? err.message : 'Unknown Error'}`);
     }
   }
-  public static async getMany() {
+  public static async getMany(columnId?: number) {
     try {
-      const req = await fetch(`http://localhost:3000/api/column`, {
+      
+      const req = await fetch(`http://localhost:3000/api/task${columnId !== undefined ? '?columnId=' + columnId : ''}`, {
         method: 'GET',
       });
 
@@ -41,9 +42,13 @@ export class ColumnApi {
       throw new Error(`Error fetch data: ${err instanceof Error ? err.message : 'Unknown Error'}`);
     }
   }
-  public static async create(payload: { title: string, viewIndex: number, }) {
+  public static async create(payload: {
+    title: string,
+    viewIndex: number,
+    columnId: number,
+  }) {
     try {
-      const req = await fetch(`http://localhost:3000/api/column`, {
+      const req = await fetch(`http://localhost:3000/api/task`, {
         method: 'POST',
         headers: new Headers({
           'Content-Type': 'application/json',
@@ -67,14 +72,18 @@ export class ColumnApi {
     }
   }
   public static async update(
-    columnId: number | string,
+    taskId: number | string,
     payload: {
-      title?: string,
-      viewIndex?: number,
+      title?: string;
+      description?: string;
+      viewIndex?: number;
+      priority?: number;
+      dueDate?: Date;
+      columnId?: number;
     }
   ) {
     try {
-      const req = await fetch(`http://localhost:3000/api/column/${columnId}`, {
+      const req = await fetch(`http://localhost:3000/api/task/${taskId}`, {
         method: 'PATCH',
         headers: new Headers({
           'Content-Type': 'application/json',
@@ -97,9 +106,9 @@ export class ColumnApi {
       throw new Error(`Error fetch data: ${err instanceof Error ? err.message : 'Unknown Error'}`);
     }
   }
-  public static async remove(columnId: number | string) {
+  public static async remove(taskId: number | string) {
     try {
-      const req = await fetch(`http://localhost:3000/api/column/${columnId}`, {
+      const req = await fetch(`http://localhost:3000/api/task/${taskId}`, {
         method: 'DELETE',
       });
 

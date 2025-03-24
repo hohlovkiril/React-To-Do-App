@@ -16,5 +16,5 @@ export class TaskUpdateDto {
   description?: string;
   viewIndex?: number;
   priority?: TaskPriority;
-  duoDate?: Date;
+  dueDate?: Date;
 }

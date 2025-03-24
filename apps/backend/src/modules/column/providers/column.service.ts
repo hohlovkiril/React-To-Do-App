@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ColumnCreateDto, ColumnUpdateDto } from 'src/dto';
 import { ColumnEntity } from 'src/entities';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 @Injectable()
 export class ColumnService {
@@ -57,6 +57,7 @@ export class ColumnService {
 
     const newColumn = this.repository.create();
     newColumn.title = payload.title;
+    newColumn.viewIndex = payload.viewIndex;
 
     return await this.repository.save(newColumn);
   }
@@ -69,6 +70,7 @@ export class ColumnService {
 
     if (payload.title !== undefined) {
       const checkTitle = await this.repository.findOneBy({
+        id: Not(id),
         title: payload.title,
       });
 
@@ -85,7 +87,7 @@ export class ColumnService {
       column.viewIndex = payload.viewIndex;
     }
 
-    return column;
+    return await this.repository.save(column);
   }
 
   public async remove(id: number): Promise<ColumnEntity> {

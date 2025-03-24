@@ -1,5 +1,6 @@
 {
   "name": "project-to-do-app",
+  "homepage": "https://hohlovkiril.github.io/To-Do-App/",
   "version": "1.0.0",
   "private": true,
   "keywords": [],
@@ -9,5 +10,9 @@
   "workspaces": [
     "apps/*",
     "lib/*"
-  ]
+  ],
+  "scripts": {
+    "frontend:build": "npm run build --workspace apps/frontend",
+    "frontend:gh-deploy": "npm run gh-deploy --workspace apps/frontend"
+  }
 }

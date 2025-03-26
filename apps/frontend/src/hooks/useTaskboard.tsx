@@ -131,8 +131,6 @@ export const TaskboardProvider: React.FC<TaskboardProps> = ({ children }) => {
     loaded,
     handleUpdateDatabase,
   ])
-
-  console.table(state.sort((a, b) => a.viewIndex - b.viewIndex))
   
   return (
     <TaskboardContext.Provider

@@ -175,10 +175,7 @@ export function TaskForm(props: TaskFormProps) {
     <TaskFormContainer
       open={props.open}
       anchor='right'
-      onClose={() => {
-        props.onClose();
-        handleAutoSave();
-      }}
+      onClose={props.onClose}
     >
       <Box>
         <Card>
